@@ -15,60 +15,95 @@ public class BuildingSimulation {
     }
 
     static class CapitalBuildingRunnable implements Runnable {
+        private static final int MAX_STEPS = 30;
+        private static final int ROTATION_AREA_WIDTH = WIDTH / 4; // Ширина площини ротації
+        private static final int ROTATION_AREA_HEIGHT = HEIGHT / 4; // Висота площини ротації
+
         @Override
         public void run() {
             Random random = new Random();
+            int steps = 0;
 
-            while (true) {
-                // Генеруємо початкову точку будинку в лівій верхній чверті області
-                int startX = random.nextInt(WIDTH / 2);
-                int startY = random.nextInt(HEIGHT / 2);
+            while (steps < MAX_STEPS) {
+                int startX = random.nextInt(ROTATION_AREA_WIDTH);
+                int startY = random.nextInt(ROTATION_AREA_HEIGHT);
+                int endX = random.nextInt(ROTATION_AREA_WIDTH);
+                int endY = random.nextInt(ROTATION_AREA_HEIGHT);
 
-                // Генеруємо кінцеву точку будинку в межах області
-                int endX = random.nextInt(WIDTH / 2);
-                int endY = random.nextInt(HEIGHT / 2);
-
-                moveBuilding(startX, startY, endX, endY);
+                moveCapitalBuilding(startX, startY, endX, endY);
 
                 try {
                     Thread.sleep(1000); // Пауза між генераціями будинків
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                steps++;
             }
         }
     }
 
     static class WoodenBuildingRunnable implements Runnable {
+        private static final int MAX_STEPS = 30;
+        private static final int ROTATION_AREA_WIDTH = WIDTH / 4; // Ширина площини ротації
+        private static final int ROTATION_AREA_HEIGHT = HEIGHT / 4; // Висота площини ротації
+
         @Override
         public void run() {
             Random random = new Random();
+            int steps = 0;
 
-            while (true) {
-                // Генеруємо початкову точку будинку в нижній правій чверті області
-                int startX = WIDTH / 2 + random.nextInt(WIDTH / 2);
-                int startY = HEIGHT / 2 + random.nextInt(HEIGHT / 2);
+            while (steps < MAX_STEPS) {
+                int startX = WIDTH / 2 + random.nextInt(ROTATION_AREA_WIDTH);
+                int startY = HEIGHT / 2 + random.nextInt(ROTATION_AREA_HEIGHT);
+                int endX = WIDTH / 2 + random.nextInt(ROTATION_AREA_WIDTH);
+                int endY = HEIGHT / 2 + random.nextInt(ROTATION_AREA_HEIGHT);
 
-                // Генеруємо кінцеву точку будинку в межах області
-                int endX = WIDTH / 2 + random.nextInt(WIDTH / 2);
-                int endY = HEIGHT / 2 + random.nextInt(HEIGHT / 2);
-
-                moveBuilding(startX, startY, endX, endY);
+                moveWoodenBuilding(startX, startY, endX, endY);
 
                 try {
                     Thread.sleep(1000); // Пауза між генераціями будинків
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                steps++;
             }
         }
     }
 
-    private static void moveBuilding(int startX, int startY, int endX, int endY) {
+    private static void moveCapitalBuilding(int startX, int startY, int endX, int endY) {
         Point currentPos = new Point(startX, startY);
 
         while (currentPos.x != endX || currentPos.y != endY) {
-            // Рухаємо будинок в напрямку кінцевої точки зі швидкістю V
+            if (currentPos.x > endX) {
+                currentPos.x -= V;
+            } else if (currentPos.x < endX) {
+                currentPos.x += V;
+            }
+
+            if (currentPos.y > endY) {
+                currentPos.y -= V;
+            } else if (currentPos.y < endY) {
+                currentPos.y += V;
+            }
+
+            System.out.println("Капітальний будинок рухається до точки: " + currentPos);
+
+            try {
+                Thread.sleep(100); // Пауза між кроками руху будинка
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("Капітальний будинок досяг кінцевої точки: " + currentPos);
+    }
+
+    private static void moveWoodenBuilding(int startX, int startY, int endX, int endY) {
+        Point currentPos = new Point(startX, startY);
+
+        while (currentPos.x != endX || currentPos.y != endY) {
             if (currentPos.x < endX) {
                 currentPos.x += V;
             } else if (currentPos.x > endX) {
@@ -81,7 +116,7 @@ public class BuildingSimulation {
                 currentPos.y -= V;
             }
 
-            System.out.println("Будинок рухається до точки: " + currentPos);
+            System.out.println("Дерев'яний будинок рухається до точки: " + currentPos);
 
             try {
                 Thread.sleep(100); // Пауза між кроками руху будинка
@@ -90,6 +125,6 @@ public class BuildingSimulation {
             }
         }
 
-        System.out.println("Будинок досяг кінцевої точки: " + currentPos);
+        System.out.println("Дерев'яний будинок досяг кінцевої точки: " + currentPos);
     }
 }
