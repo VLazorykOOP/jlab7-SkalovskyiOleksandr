@@ -15,11 +15,13 @@ public class Main {
     private static Object lock = new Object();
     private static JComboBox<ThreadPriority> bookPriorityComboBox;
     private static JComboBox<ThreadPriority> moviePriorityComboBox;
-    private static JTextField titleTextField;
-    private static JTextField authorTextField;
-    private static JTextField yearTextField;
-    private static JTextField directorTextField;
-    private static JTextField durationTextField;
+    private static JTextField bookTitleTextField;
+    private static JTextField bookAuthorTextField;
+    private static JTextField bookYearTextField;
+    private static JTextField movieTitleTextField;
+    private static JTextField movieAuthorTextField;
+    private static JTextField movieDirectorTextField;
+    private static JTextField movieDurationTextField;
 
     public static void main(String[] args) {
         ArrayList<Record> records = new ArrayList<>();
@@ -34,17 +36,17 @@ public class Main {
         JLabel bookTitleLabel = new JLabel("Назва книги:");
         JLabel bookAuthorLabel = new JLabel("Автор книги:");
         JLabel bookYearLabel = new JLabel("Рік видання:");
-        titleTextField = new JTextField(15);
-        authorTextField = new JTextField(15);
-        yearTextField = new JTextField(15);
+        bookTitleTextField = new JTextField(15);
+        bookAuthorTextField = new JTextField(15);
+        bookYearTextField = new JTextField(15);
         JButton addBookButton = new JButton("Додати книгу");
 
         bookPanel.add(bookTitleLabel);
-        bookPanel.add(titleTextField);
+        bookPanel.add(bookTitleTextField);
         bookPanel.add(bookAuthorLabel);
-        bookPanel.add(authorTextField);
+        bookPanel.add(bookAuthorTextField);
         bookPanel.add(bookYearLabel);
-        bookPanel.add(yearTextField);
+        bookPanel.add(bookYearTextField);
         bookPanel.add(addBookButton);
 
         JPanel moviePanel = new JPanel();
@@ -53,20 +55,20 @@ public class Main {
         JLabel movieAuthorLabel = new JLabel("Автор фільму:");
         JLabel movieDirectorLabel = new JLabel("Режисер:");
         JLabel movieDurationLabel = new JLabel("Тривалість:");
-        titleTextField = new JTextField(15);
-        authorTextField = new JTextField(15);
-        directorTextField = new JTextField(15);
-        durationTextField = new JTextField(15);
+        movieTitleTextField = new JTextField(15);
+        movieAuthorTextField = new JTextField(15);
+        movieDirectorTextField = new JTextField(15);
+        movieDurationTextField = new JTextField(15);
         JButton addMovieButton = new JButton("Додати фільм");
 
         moviePanel.add(movieTitleLabel);
-        moviePanel.add(titleTextField);
+        moviePanel.add(movieTitleTextField);
         moviePanel.add(movieAuthorLabel);
-        moviePanel.add(authorTextField);
+        moviePanel.add(movieAuthorTextField);
         moviePanel.add(movieDirectorLabel);
-        moviePanel.add(directorTextField);
+        moviePanel.add(movieDirectorTextField);
         moviePanel.add(movieDurationLabel);
-        moviePanel.add(durationTextField);
+        moviePanel.add(movieDurationTextField);
         moviePanel.add(addMovieButton);
 
         JPanel controlPanel = new JPanel();
@@ -99,29 +101,29 @@ public class Main {
 
         addBookButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String title = titleTextField.getText();
-                String author = authorTextField.getText();
-                int year = Integer.parseInt(yearTextField.getText());
+                String title = bookTitleTextField.getText();
+                String author = bookAuthorTextField.getText();
+                int year = Integer.parseInt(bookYearTextField.getText());
                 Book book = new Book(title, author, year);
                 records.add(book);
-                titleTextField.setText("");
-                authorTextField.setText("");
-                yearTextField.setText("");
+                bookTitleTextField.setText("");
+                bookAuthorTextField.setText("");
+                bookYearTextField.setText("");
             }
         });
 
         addMovieButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String title = titleTextField.getText();
-                String author = authorTextField.getText();
-                String director = directorTextField.getText();
-                int duration = Integer.parseInt(durationTextField.getText());
+                String title = movieTitleTextField.getText();
+                String author = movieAuthorTextField.getText();
+                String director = movieDirectorTextField.getText();
+                int duration = Integer.parseInt(movieDurationTextField.getText());
                 Movie movie = new Movie(title, author, director, duration);
                 records.add(movie);
-                titleTextField.setText("");
-                authorTextField.setText("");
-                directorTextField.setText("");
-                durationTextField.setText("");
+                movieTitleTextField.setText("");
+                movieAuthorTextField.setText("");
+                movieDirectorTextField.setText("");
+                movieDurationTextField.setText("");
             }
         });
 
